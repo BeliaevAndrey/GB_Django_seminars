@@ -27,7 +27,7 @@ def index(request):
 
 
 def about(request):
-    logger.info(f'Index accessed')
+    logger.info(f'About accessed')
     html = """<html>
     <head><title>About page</title></head>
     <body>
