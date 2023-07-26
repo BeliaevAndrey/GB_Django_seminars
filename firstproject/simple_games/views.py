@@ -42,6 +42,7 @@ def index(request):
     </body>
     </html>
     """
+    logger.info(f'Games accessed')
     return HttpResponse(html)
 
 
