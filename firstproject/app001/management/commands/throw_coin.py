@@ -1,0 +1,10 @@
+from django.core.management.base import BaseCommand
+from app001.models import CoinPlay
+from random import randint
+
+
+class Command(BaseCommand):
+    help = "Throw a coin."
+
+    def handle(self, *args, **options):
+        CoinPlay.add_throw(randint(0, 1))
