@@ -3,7 +3,7 @@ from app001.models import Article, Author, Commentary
 
 
 class Command(BaseCommand):
-    help = "Get all author's articles by athor ID"
+    help = "Get all author's articles and commentaries by author ID"
 
     def add_arguments(self, parser):
         parser.add_argument('pk', type=int, help='Author ID')

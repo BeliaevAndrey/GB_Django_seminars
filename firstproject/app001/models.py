@@ -34,7 +34,10 @@ class Commentary(models.Model):
     alternation_date = models.DateField(auto_now=True)
 
     def __str__(self):
-        return f'{self.author.get_fullname()} to {str(self.article)} on {self.alternation_date}'
+        return (f'{self.author.get_fullname()} to '
+                f'{str(self.article)} by '
+                f'{str(self.article.author.get_fullname())} on '
+                f'{self.alternation_date}')
 
 
 """
