@@ -16,7 +16,7 @@ class Author(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author: Author = models.ForeignKey(Author, on_delete=models.CASCADE)
     category = models.CharField(max_length=100)
     views = models.IntegerField(default=0)
     publication_date = models.DateField(auto_now=True)
@@ -27,8 +27,8 @@ class Article(models.Model):
 
 
 class Commentary(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    author: Author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    article: Article = models.ForeignKey(Article, on_delete=models.CASCADE)
     content = models.TextField()
     publication_date = models.DateField(auto_now_add=True)
     alternation_date = models.DateField(auto_now=True)

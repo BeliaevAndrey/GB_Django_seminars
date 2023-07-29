@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
 from app001.models import Article, Author, Commentary
-from datetime import date
 from random import randint, choice, sample
 
 
