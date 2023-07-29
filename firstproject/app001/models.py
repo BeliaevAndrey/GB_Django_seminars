@@ -26,6 +26,17 @@ class Article(models.Model):
         return f'{self.title} {self.published} {self.publication_date}'
 
 
+class Commentary(models.Model):
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    content = models.TextField()
+    publication_date = models.DateField(auto_now_add=True)
+    alternation_date = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.author.get_fullname()} to {str(self.article)} on {self.alternation_date}'
+
+
 """
 1.  CharField - поле для хранения строковых данных. Параметры:
     max_length (максимальная длина строки), blank (может ли поле быть
