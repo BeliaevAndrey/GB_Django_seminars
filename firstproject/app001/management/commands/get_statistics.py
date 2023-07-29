@@ -11,7 +11,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         amount = options.get('amount')
-        # coins = list(CoinPlay.objects.all())
         aggregate = {'obverse': 0, 'reverse': 0}
         for a_throw in list(CoinPlay.objects.all())[-amount:]:
             if a_throw.side == 'obverse':
