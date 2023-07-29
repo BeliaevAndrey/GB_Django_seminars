@@ -7,4 +7,5 @@ class Command(BaseCommand):
     help = "Throw a coin."
 
     def handle(self, *args, **options):
-        CoinPlay.add_throw(randint(0, 1))
+        coin = CoinPlay(**CoinPlay.add_throw(randint(0, 1)))
+        coin.save()
