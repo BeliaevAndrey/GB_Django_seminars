@@ -23,7 +23,9 @@ class Article(models.Model):
     published = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.title} {self.published} {self.publication_date}'
+        return (f'{self.title} '
+                f'{["unpublished", "published"][self.published]} '
+                f'{self.publication_date}')
 
 
 class Commentary(models.Model):
