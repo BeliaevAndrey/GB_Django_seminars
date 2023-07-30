@@ -3,7 +3,7 @@ from homewrk_02.models import Customer
 
 
 class Command(BaseCommand):
-    help = "Get customer by id."
+    help = "Get customer by name."
 
     def add_arguments(self, parser):
         parser.add_argument('name', type=str, help='Searched customer name ("name surname")')
