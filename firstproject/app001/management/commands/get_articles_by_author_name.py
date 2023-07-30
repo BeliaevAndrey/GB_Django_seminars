@@ -8,13 +8,34 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('name', type=str, help='Author name')
         parser.add_argument('surname', type=str, help='Author surname')
+        parser.add_argument('--amount', type=int,
+                            help='Amount of records')
+        order_help = ('Set ordering parameter: '
+                      'title, category, views, '
+                      'publication_date, published')
+        parser.add_argument('--order', type=str,
+                            help=order_help)
+        parser.add_argument('--reverse', action='store_true', help='Reverse order')
 
     def handle(self, *args, **options):
         surname = options.get('surname')
         name = options.get('name')
+        amount = options.get('amount') or 0
+        order = options.get('order')
+        reverse = options.get('reverse')
         author = Author.objects.filter(surname=surname, name=name).first()
         if author:
-            articles = Article.objects.filter(author=author)
+            if order:
+                if reverse:
+                    articles = list(
+                        Article.objects.order_by(order).filter(author=author)
+                    )[::-1][-amount:]
+                else:
+                    articles = list(
+                        Article.objects.order_by(order).filter(author=author)
+                    )[-amount:]
+            else:
+                articles = list(Article.objects.filter(author=author))[-amount:]
             self.stdout.write('\n'.join(
                 [
                     f'Articles by {author.get_fullname()}:',
