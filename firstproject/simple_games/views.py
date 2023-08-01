@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import CoinPlay
 from random import randint
 import logging
 
@@ -87,3 +88,23 @@ def random_number(request):
               '<a href="/games">Back</a><br>'
     )
     return HttpResponse(out)
+
+
+def coin_records(request, amount):
+    context = {'game': 'Coin play', 'attempts': []}
+    # aggregate = {'obverse': 0, 'reverse': 0}
+
+    for a_throw in list(CoinPlay.objects.all())[-amount:]:
+        if a_throw.side == 'obverse':
+            context['attempts'].append('obverse')
+        else:
+            context['attempts'].append('reverse')
+    return render(request, 'app001/common_records.html', context=context)
+
+
+def dice_records(request):
+    ...
+
+
+def random_number_records(request):
+    ...
