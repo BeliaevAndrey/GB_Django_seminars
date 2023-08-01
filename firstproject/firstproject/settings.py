@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app001',
     'simple_games',
+    'homewrk_02',
 ]
 
 MIDDLEWARE = [
