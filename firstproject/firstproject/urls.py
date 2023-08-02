@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('app001.urls')),
     path('games/', include('simple_games.urls')),
+    path('', include('homewrk_02.urls')),
 ]
