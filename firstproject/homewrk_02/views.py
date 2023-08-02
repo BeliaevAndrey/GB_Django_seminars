@@ -22,6 +22,12 @@ from homewrk_02.models import Customer, Product, Order
 
 
 def order_list(request, customer_id):
+    """
+    List of orders for customer with lists of products
+    :param request:
+    :param customer_id: int     -- customer id
+    :return:
+    """
     customer = get_object_or_404(Customer, pk=customer_id)
     orders = Order.objects.filter(customer=customer)
     context = {'customer': customer, }
@@ -54,7 +60,7 @@ def ordered_products_list(request, customer_id, period):
     if not limit:
         orders = Order.objects.filter(customer=customer).order_by('-order_date')
     else:
-        orders = Order.objects.filter(customer=customer).filter(order_date__gt=date_low_lim).order_by('-order_date')
+        orders = Order.objects.filter(customer=customer).filter(order_date__gt=date_low_lim).order_by('pk')
     context = {'customer': customer, }
     if orders:
         context['products'] = []
@@ -66,7 +72,7 @@ def ordered_products_list(request, customer_id, period):
                         'name': item.name,
                         'price': item.price,
                         'date': order.order_date,
-                     }
+                    }
                     for item in order.product.all()
                 ]
             )
@@ -75,7 +81,7 @@ def ordered_products_list(request, customer_id, period):
 
 def ordered_products_unique(request, customer_id, period):
     """
-    Show products list form orders for defined period
+    Show non-repeated products list form orders for defined period
     :param request:
     :param customer_id: int
     :param period: str      -- 'week', 'month' or 'year'
@@ -93,16 +99,23 @@ def ordered_products_unique(request, customer_id, period):
         orders = Order.objects.filter(customer=customer).filter(order_date__gt=date_low_lim).order_by('-order_date')
     context = {'customer': customer, }
     if orders:
-        context['products'] = []
+        products_total = set()
         for order in orders:
-            context['products'].extend(
-                [
-                    {
-                        'pk': item.pk,
-                        'name': item.name,
-                        'price': item.price,
-                     }
-                    for item in order.product.all()
-                ]
-            )
+            products_total.update([*order.product.all()])
+        context['products'] = [
+            {
+                'pk': item.pk,
+                'name': item.name,
+                'price': item.price,
+            }
+            for item in sorted(products_total, key=lambda x: x.price)
+        ]
     return render(request, 'homewrk_02/hw02_ordered_products_unique.html', context=context)
+
+
+# Customers ids for test:
+# 18 -- 1 order
+# 19 -- 1 order
+# 20 -- many orders, long time period (year)
+# 21 -- 3 orders, short time period (week), similar products in different orders
+# 23 -- 2 orders, short time period (week)
