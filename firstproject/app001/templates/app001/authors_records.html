@@ -6,18 +6,17 @@
 <div>
     <h3>{{ author }}</h3>
     <ol>
-        {% for article in articles %}
-        {% if article.published %}
-        <li><a href="#">{{ article.title }}</a></li>
+        {% for art in articles %}
+        {% if art.published %}
+        <li><a href="{% url 'get_article' art.id %}">{{ art.title }}</a></li>
         {% else %}
-        <li>{{ article.title }}</li>
+        <li>{{ art.title }}</li>
         {% endif %}
     {% endfor %}
     </ol>
 </div>
 <footer>
-    <a href="">Main</a>&nbsp;&nbsp;&nbsp;
-    <a href="about/">About</a>
-    {{ tst }}
+    <a href="{% url 'index' %}">Main</a>&nbsp;&nbsp;&nbsp;
+    <a href="% url 'about' %">About</a>
 </footer>
 {% endblock %}

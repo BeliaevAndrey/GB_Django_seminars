@@ -24,7 +24,7 @@ GAME_HTML = """<html>
         """
 
 
-def index(request):
+def games_index(request):
     html = """<html>
     <head><title>Index page</title></head>
     <body>
@@ -54,7 +54,7 @@ def coin(request):
             title="Coin Play",
             result=f"Coin side: {side}",
             links='<a href="">Again</a><br>'
-                  '<a href="/games">Back</a><br>'
+                  '<a href="/games/simple_games/">Back</a><br>'
         )
     except Exception as exc:
         logger.exception(f'Error occurred: {exc}')
@@ -70,7 +70,7 @@ def dice(request):
         title="Dice Play",
         result=f"Cube Side Value: {cube_side}",
         links='<a href="">Again</a><br>'
-              '<a href="/games">Back</a><br>'
+              '<a href="/games/simple_games/">Back</a><br>'
 
     )
 
@@ -85,21 +85,20 @@ def random_number(request):
         title="Random Number",
         result=f"Your number: {answer}",
         links='<a href="">Again</a><br>'
-              '<a href="/games">Back</a><br>'
+              '<a href="/games/simple_games/">Back</a><br>'
     )
     return HttpResponse(out)
 
 
 def coin_records(request, amount):
     context = {'game': 'Coin play', 'attempts': []}
-    # aggregate = {'obverse': 0, 'reverse': 0}
 
     for a_throw in list(CoinPlay.objects.all())[-amount:]:
         if a_throw.side == 'obverse':
             context['attempts'].append('obverse')
         else:
             context['attempts'].append('reverse')
-    return render(request, 'app001/common_records.html', context=context)
+    return render(request, 'simple_games/common_records.html', context=context)
 
 
 def dice_records(request):
