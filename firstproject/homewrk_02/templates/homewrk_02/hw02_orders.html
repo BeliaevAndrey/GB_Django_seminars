@@ -4,7 +4,7 @@
 
 {% block content %}
 <div>
-    <h3>{{ customer.name }}'s orders:</h3>
+    <h3>{{ customer.name }}'s (id: {{ customer.pk }}) orders:</h3>
     {% if not orders %}
     <p>Nothing ordered yet</p>
     {% endif %}
@@ -14,24 +14,24 @@
             <table>
                 <tr>
                     <td>Order id:</td>
-                    <td>{{ order.order.pk }}</td>
+                    <td class="price">{{ order.order.pk }}</td>
                 </tr>
                 <tr>
                     <td>Order date:</td>
-                    <td>{{ order.order.order_date }}</td>
+                    <td class="price">{{ order.order.order_date }}</td>
                 </tr>
                 <tr>
                     <td>Total price:</td>
-                    <td>{{ order.order.total_price }}</td>
+                    <td class="price">{{ order.order.total_price }}</td>
                 </tr>
                 <tr>
                     <th>Product name:</th>
-                    <th>Product price:</th>
+                    <th class="price">Product price:</th>
                 </tr>
                 {% for product in order.products %}
                 <tr>
                     <td>{{ product.name }}</td>
-                    <td>{{ product.price }}</td>
+                    <td class="price r_align">{{ product.price }}</td>
                 </tr>
                 {% endfor %}
             </table>
