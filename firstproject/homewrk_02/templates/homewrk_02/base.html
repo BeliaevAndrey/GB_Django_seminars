@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style rel="stylesheet" type="text/css">
+    table {
+        width: 800px;
+        border: solid 1px black;
+        border-collapse: collapse;
+        margin-bottom: 14pt;
+    }
+    .wide {
+        width: 1024px;
+    }
+    tr {
+        border: solid 1px black;
+    }
+    td {
+        border: solid 1px black;
+        padding: 2pt;
+        padding-left: 10pt;
+        padding-right: 10pt;
+    }
+    th {
+        background-color: #ccc;
+        border: solid 1px black;
+        text-align: center;
+    }
+    .price {
+        width: 200px;
+    }
+    .number {
+        width: 100px;
+    }
+    .r_align {
+        text-align: right;
+    }
+
+
+    </style>
+    <title>{% block title %}Site{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<p>A text is to appear here soon...</p>
+{% endblock %}
+</body>
+</html>
