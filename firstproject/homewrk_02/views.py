@@ -1,24 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime as dt, timedelta
 
-from homewrk_02.models import Customer, Product, Order
+from .forms import EditProductForm
+
+from .models import Customer, Product, Order
 
 
-# Задание No7
-#
-# * Доработаем задачу 8 из прошлого семинара про клиентов, товары и заказы.
-# * Создайте шаблон для вывода всех заказов клиента и списком товаров
-#   внутри каждого заказа.
-# * Подготовьте необходимый маршрут и представление.
-#
-# Домашнее задание
-# * Продолжаем работать с товарами и заказами.
-# * Создайте шаблон, который выводит список заказанных клиентом товаров
-#   из всех его заказов с сортировкой по времени:
-#       * за последние 7 дней (неделю)
-#       * за последние 30 дней (месяц)
-#       * за последние 365 дней (год)
-# * *Товары в списке не должны повторятся.
+def products_list(request):
+    products = [*enumerate(Product.objects.all().order_by('pk'), start=1)]
+    return render(request, 'homewrk_02/hw02_products.html', {'products': products})
 
 
 def order_list(request, customer_id):
@@ -113,9 +103,19 @@ def ordered_products_unique(request, customer_id, period):
     return render(request, 'homewrk_02/hw02_ordered_products_unique.html', context=context)
 
 
-# Customers ids for test:
-# 18 -- 1 order
-# 19 -- 1 order
-# 20 -- many orders, long time period (year)
-# 21 -- 3 orders, short time period (week), similar products in different orders
-# 23 -- 2 orders, short time period (week)
+def edit_product(request):
+
+    if request.method == 'POST':
+        form = EditProductForm(request.POST)
+        if form.is_valid():
+            product_pk = int(form.cleaned_data['product_pk'])
+            product = get_object_or_404(Product, pk=product_pk)
+            product.name = form.cleaned_data['name']
+            product.description = form.cleaned_data['description']
+            product.price = form.cleaned_data['price']
+            product.amount = form.cleaned_data['amount']
+            product.add_date = dt.today
+            product.save()
+    else:
+        form = EditProductForm()
+    return render(request, 'homewrk_02/sm02_edit_products.html', {'title': 'Edit products', 'form': form})

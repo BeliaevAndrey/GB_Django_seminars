@@ -8,6 +8,5 @@ urlpatterns = [
     path('simple_games/diceplay/', views.dice, name='diceplay'),
     path('simple_games/randomizer/', views.random_number, name='random_number'),
     path('simple_games/coinplay_records/<int:amount>/', views.coin_records, name='coinplay_records'),
-    path('simple_games/diceplay_records/<int:amount>', views.dice_records, name='diceplay_records'),
-    path('simple_games/randomizer_records/<int:amount>', views.random_number_records, name='random_number_records'),
+    path('get_a_game/', views.simple_games_form, name='simple_games_form'),
 ]
