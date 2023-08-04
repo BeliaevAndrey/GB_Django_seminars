@@ -2,9 +2,94 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 import logging
 
+from .forms import AddAuthorForm, AddCommentary, AddArticle
 from .models import Author, Article, Commentary
 
 logger = logging.getLogger(__name__)
+
+
+def add_author_form(request):
+    """Form to add an author"""
+    title = "Add author"
+    message = 'Wrong input'
+
+    if request.method == 'POST':
+        form = AddAuthorForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            surname = form.cleaned_data['surname']
+            email = form.cleaned_data['surname']
+            biography = form.cleaned_data['biography']
+            birthday = form.cleaned_data['birthday']
+            Author(
+                name=name,
+                surname=surname,
+                email=email,
+                biography=biography,
+                birthday=birthday,
+            ).save()
+            logger.info(f'Added a new author: {name} {surname} {birthday}')
+    else:
+        message = 'Fill a form to add author, please.'
+        form = AddAuthorForm()
+    return render(request, 'app001/add_author_form.html',
+                  {'form': form, 'title': title, 'message': message})
+
+
+def add_commentary_form_simple(request, article_id):
+    """form to add a commentary by author"""
+
+    article = get_object_or_404(Article, pk=article_id)
+    author = get_object_or_404(Author, pk=article.author.pk)
+    article.views += 1
+    article.save()
+    commentaries = Commentary.objects.filter(article=article)
+    print(type(commentaries))
+    context = {
+        'article': article,
+        'author': author,
+        'commentaries': commentaries,
+        'form': AddCommentary(),
+        'button': 'Publish',
+    }
+
+    if request.method == 'POST':
+        form = AddCommentary(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            author_pk = form.cleaned_data['author_pk']
+            c_author = get_object_or_404(Author, pk=author_pk)
+            c_article = get_object_or_404(Article, pk=article_id)
+            Commentary(
+                author=c_author,
+                article=c_article,
+                content=content,
+            ).save()
+
+    return render(request, 'app001/article.html', context)
+
+
+def add_article(request):
+    if request.method == 'POST':
+        form = AddArticle(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            content = form.cleaned_data['content']
+            author = form.cleaned_data['author']
+            category = form.cleaned_data['category']
+            article = Article(
+                title=title,
+                content=content,
+                author=author,
+                category=category,
+            )
+            article.save()
+            logger.info(f'Added article: {article}')
+    else:
+        logger.info(f'Adding article')
+        form = AddArticle()
+    return render(request, 'app001/add_article.html',
+                  {'form': form, 'title': 'Add article', 'button': 'Add Article'})
 
 
 # def index_old(request):
@@ -89,6 +174,5 @@ def get_article(request, article_id):
         'article': article,
         'author': author,
         'commentaries': commentaries,
-        }
+    }
     return render(request, 'app001/article.html', context=context)
-

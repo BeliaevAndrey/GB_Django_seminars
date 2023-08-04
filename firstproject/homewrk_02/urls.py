@@ -8,4 +8,6 @@ urlpatterns = [
     path('ordered_products_unique/<int:customer_id>/<slug:period>/',
          views.ordered_products_unique,
          name='ordered_products_unique'),
+    path('products_list/', views.products_list, name='products_list'),
+    path('edit_product/', views.edit_product, name='edit_product'),
 ]

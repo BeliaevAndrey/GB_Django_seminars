@@ -9,12 +9,20 @@
 
     {{ article.content }}
     <ul>Commentaries:
-    {% for comment in commentaries %}
-    <li>{{ comment.author.name }}
-        {{ comment.author.surname }}:
-        {{ comment.content }}</li>
-    {% endfor %}
+        {% for comment in commentaries %}
+        <li>{{ comment.author.name }}
+            {{ comment.author.surname }}:
+            {{ comment.content }}
+        </li>
+        {% endfor %}
     </ul>
+</div>
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_div }}
+        <input type="submit" value="{{ button }}">
+    </form>
 </div>
 <footer>
     <a href="">Main</a>&nbsp;&nbsp;&nbsp;

@@ -16,7 +16,7 @@ class Customer(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    description = models.EmailField(max_length=300)
+    description = models.CharField(max_length=300)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     amount = models.IntegerField()
     add_date = models.DateField(auto_now=True)

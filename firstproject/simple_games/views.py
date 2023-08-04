@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+
 from .models import CoinPlay
+from .forms import ChooseGameForm
+
 from random import randint
 import logging
 
 logger = logging.getLogger(__name__)
-
 
 GAME_HTML = """<html>
         <head><title>{title}</title></head>
@@ -91,7 +93,7 @@ def random_number(request):
 
 
 def coin_records(request, amount):
-    context = {'game': 'Coin play', 'attempts': []}
+    context = {'title': 'Coin play', 'attempts': []}
 
     for a_throw in list(CoinPlay.objects.all())[-amount:]:
         if a_throw.side == 'obverse':
@@ -101,9 +103,27 @@ def coin_records(request, amount):
     return render(request, 'simple_games/common_records.html', context=context)
 
 
-def dice_records(request):
-    ...
-
-
-def random_number_records(request):
-    ...
+def simple_games_form(request):
+    coin_sides = ('obverse', 'reverse')
+    if request.method == 'POST':
+        form = ChooseGameForm(request.POST)
+        title = ['Coin play', 'Dice', 'Random Number'][int(form.data['a_game'])]
+        if form.is_valid():
+            if title == 'Coin play':
+                attempts_pack = [coin_sides[randint(0, 1)] for _ in range(form.cleaned_data['attempts'])]
+            elif title == 'Dice':
+                attempts_pack = [randint(1, 6) for _ in range(form.cleaned_data['attempts'])]
+            else:
+                attempts_pack = [randint(0, 99) for _ in range(form.cleaned_data['attempts'])]
+            logger.info(f'Sending results fot game {title}')
+            return render(request,
+                          'simple_games/common_records.html',
+                          {
+                              'title': title,
+                              'attempts': attempts_pack}
+                          )
+    else:
+        form = ChooseGameForm()
+        logger.info(f'Sending game chooser')
+        return render(request, 'simple_games/choose_game_form.html',
+                      {'form': form, 'title': 'Choose Game'})
