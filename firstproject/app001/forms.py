@@ -9,7 +9,7 @@ class AddAuthorForm(forms.Form):
 
     name = forms.CharField(min_length=1, max_length=100)
     surname = forms.CharField(min_length=1, max_length=100)
-    email = forms.CharField(max_length=100)
+    email = forms.EmailField(max_length=100)
     birthday = forms.DateField(
         initial=date.today,
         widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date', })

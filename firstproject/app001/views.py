@@ -18,7 +18,7 @@ def add_author_form(request):
         if form.is_valid():
             name = form.cleaned_data['name']
             surname = form.cleaned_data['surname']
-            email = form.cleaned_data['surname']
+            email = form.cleaned_data['email']
             biography = form.cleaned_data['biography']
             birthday = form.cleaned_data['birthday']
             Author(
