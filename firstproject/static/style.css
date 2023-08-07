@@ -33,3 +33,6 @@ th {
 .c_align {
     text-align: center;
 }
+.image__small {
+    width: 150px;
+}

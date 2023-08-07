@@ -15,6 +15,7 @@
             <th>Added</th>
             <th>Amount</th>
             <th>Description</th>
+            <th>Image</th>
         </tr>
         {% for product in products %}
         <tr>
@@ -25,6 +26,13 @@
             <td>{{ product.1.add_date }}</td>
             <td>{{ product.1.amount }}</td>
             <td>{{ product.1.description }}</td>
+            <td>{% if product.1.p_image %}
+                <img class="image__small" src="{% static product.1.p_image %}" alt="image for: {{ product.1.name }}">
+                {% else %}
+                <p>image for:<br>{{ product.1.name }}</p>
+                {% endif %}
+            </td>
+
         </tr>
         {% endfor %}
     </table>
