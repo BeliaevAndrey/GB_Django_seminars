@@ -1,14 +1,17 @@
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime as dt, timedelta
 
-from .forms import EditProductForm
+from .forms import EditProductForm, AddProductPhoto
 
 from .models import Customer, Product, Order
 
 
 def products_list(request):
     products = [*enumerate(Product.objects.all().order_by('pk'), start=1)]
-    return render(request, 'homewrk_02/hw02_products.html', {'products': products})
+    return render(request,
+                  'homewrk_02/hw02_products.html',
+                  {'title': 'Product list', 'products': products}
+                  )
 
 
 def order_list(request, customer_id):
@@ -20,7 +23,10 @@ def order_list(request, customer_id):
     """
     customer = get_object_or_404(Customer, pk=customer_id)
     orders = Order.objects.filter(customer=customer)
-    context = {'customer': customer, }
+    context = {
+        'title': 'Order list',
+        'customer': customer,
+    }
     if orders:
         context['orders'] = []
         for order in orders:
@@ -51,7 +57,9 @@ def ordered_products_list(request, customer_id, period):
         orders = Order.objects.filter(customer=customer).order_by('-order_date')
     else:
         orders = Order.objects.filter(customer=customer).filter(order_date__gt=date_low_lim).order_by('pk')
-    context = {'customer': customer, }
+    context = {
+        'title': 'Ordered product list for customer',
+        'customer': customer, }
     if orders:
         context['products'] = []
         for order in orders:
@@ -87,7 +95,10 @@ def ordered_products_unique(request, customer_id, period):
         orders = Order.objects.filter(customer=customer).order_by('-order_date')
     else:
         orders = Order.objects.filter(customer=customer).filter(order_date__gt=date_low_lim).order_by('-order_date')
-    context = {'customer': customer, }
+    context = {
+        'title': 'Ordered product list for customer (non-repeating)',
+        'customer': customer,
+    }
     if orders:
         products_total = set()
         for order in orders:
@@ -104,11 +115,11 @@ def ordered_products_unique(request, customer_id, period):
 
 
 def edit_product(request):
-
+    """Edit product"""
     if request.method == 'POST':
         form = EditProductForm(request.POST)
         if form.is_valid():
-            product_pk = int(form.cleaned_data['product_pk'])
+            product_pk = int(form.cleaned_data['product'])
             product = get_object_or_404(Product, pk=product_pk)
             product.name = form.cleaned_data['name']
             product.description = form.cleaned_data['description']
@@ -118,4 +129,28 @@ def edit_product(request):
             product.save()
     else:
         form = EditProductForm()
-    return render(request, 'homewrk_02/sm02_edit_products.html', {'title': 'Edit products', 'form': form})
+    return render(request,
+                  'homewrk_02/sm02_edit_products.html',
+                  {'title': 'Edit products', 'form': form}
+                  )
+
+
+def add_product_photo(request):
+    """Add product photo"""
+    if request.method == 'POST':
+        print(f'{request.POST=}')
+
+        form = AddProductPhoto(request.POST, request.FILES)
+        if form.is_valid():
+            print(f'{request.POST=}')
+            product_pk = int(form.cleaned_data['product'])
+            product = get_object_or_404(Product, pk=product_pk)
+            product.p_image = form.cleaned_data['p_image']
+            product.save()
+    else:
+        form = AddProductPhoto()
+    return render(request,
+                  'homewrk_02/sm02_edit_products.html',
+                  {'title': 'Add product photo', 'form': form, }
+                  )
+
