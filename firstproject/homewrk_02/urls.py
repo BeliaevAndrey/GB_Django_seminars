@@ -10,4 +10,5 @@ urlpatterns = [
          name='ordered_products_unique'),
     path('products_list/', views.products_list, name='products_list'),
     path('edit_product/', views.edit_product, name='edit_product'),
+    path('add_product_photo/', views.add_product_photo, name='add_product_photo'),
 ]
