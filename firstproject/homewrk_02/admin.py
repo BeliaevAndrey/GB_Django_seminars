@@ -29,7 +29,7 @@ class CustomerAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     ordering = ('name', 'price', 'amount')
     list_filter = ('name', 'price', 'amount')
-    search_fields = ('name', 'price', 'description')
+    readonly_fields = ('add_date', 'p_image')
 
     fieldsets = [
         (
@@ -43,19 +43,27 @@ class ProductAdmin(admin.ModelAdmin):
             'Details',
             {
                 'classes': ['collapse'],
-                'fields': ['description', 'add_date', 'p_image']
+                'fields': ['add_date', 'p_image']
+            },
+        ),
+        (
+            'Description',
+            {
+                'classes': ['collapse'],
+                'fields': ['description']
             },
         ),
     ]
 
 
 class OrderAdmin(admin.ModelAdmin):
-    ordering = ('customer', 'product', 'total_price')
-    list_filter = ('customer', 'product', 'order_date')
+    fields = ['customer', 'product', 'total_price', 'order_date']
+    ordering = ('customer', 'product', '-total_price')
+    list_filter = ('customer', 'order_date', 'total_price', 'product',)
     search_fields = ('customer', 'product', 'order_date')
-    readonly_fields = ('order_date', 'total_price')
+    readonly_fields = ('order_date', 'total_price', 'customer', 'product')
 
 
-admin.site.register(Customer)
-admin.site.register(Product)
-admin.site.register(Order)
+admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Order, OrderAdmin)
