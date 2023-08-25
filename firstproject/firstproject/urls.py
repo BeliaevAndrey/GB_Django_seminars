@@ -19,10 +19,9 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('', include('front.urls'))
-    # path('admin/', admin.site.urls),
-    # path('', include('app001.urls')),
-    # path('games/', include('simple_games.urls')),
-    # path('', include('homewrk_02.urls')),
-    # path('__debug__/', include('debug_toolbar.urls')),
+    path('', include('front.urls')),
+    path('admin/', admin.site.urls),
+    path('app001/', include('app001.urls')),
+    path('games/', include('simple_games.urls')),
+    path('homework02', include('homewrk_02.urls')),
 ]

@@ -44,15 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'debug_toolbar',
-    # 'app001',
-    # 'simple_games',
-    # 'homewrk_02',
+    'app001',
+    'simple_games',
+    'homewrk_02',
     'front',
 ]
 
 MIDDLEWARE = [
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -100,10 +98,10 @@ DATABASES = {
         'USER': 'andrew107021',
         'PASSWORD': os.getenv('MYSQL_PASSWORD'),
         'HOST': 'andrew107021.mysql.pythonanywhere-services.com',
-        'OPTIONS': {
-            'init-command': "SET NAMES 'utf8mb4; SET sql_mode='STRICT_TRANS_TABLES'",
-            'charset': 'utf8mb4',
-        }
+        # 'OPTIONS': {
+        #     'init-command': "SET NAMES 'utf8mb4; SET sql_mode='STRICT_TRANS_TABLES'",
+        #     'charset': 'utf8mb4',
+        # }
     }
 }
 
@@ -142,14 +140,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = BASE_DIR / 'static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    BASE_DIR / "media",
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+#     BASE_DIR / "media",
+# ]
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
