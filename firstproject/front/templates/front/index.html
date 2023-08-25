@@ -13,8 +13,8 @@
 </div>
 <div>
     <ul>
-        {% for link in links %}
-            <li>{{ link }}</li>
+        {% for name, link in links.items %}
+        <li><a href="http://http://andrew107021.pythonanywhere.com/{{ link }}">{{ name }}</a></li>
         {% endfor %}
     </ul>
 </div>
