@@ -44,14 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
-    'app001',
-    'simple_games',
-    'homewrk_02',
+    # 'debug_toolbar',
+    # 'app001',
+    # 'simple_games',
+    # 'homewrk_02',
+    'front',
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -84,7 +85,7 @@ WSGI_APPLICATION = 'firstproject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+#
 # DATABASES = {     # pre-deploy settings
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
