@@ -3,13 +3,20 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+LINKS = {
+    'Add article': 'app001/add_article/',
+    'fake shop': 'homework02/products_list/',
+    'games': 'games/get_a_game/',
+}
+
 
 def index(request):
     logger.info(f'Index accessed')
     context = {
         "title": "Index page of Homework 06",
         "body": "At this stage just a stub page to demonstrate "
-                "the site is able to function."
+                "the site is able to function.",
+        "links": LINKS,
     }
     return render(request, "front/index.html", context=context)
 
