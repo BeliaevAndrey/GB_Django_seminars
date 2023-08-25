@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app001',
+    # 'app001',
     'simple_games',
     'homewrk_02',
     'front',
