@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime as dt, timedelta
 
-from .forms import EditProductForm, AddProductPhoto
+# from .forms import EditProductForm, AddProductPhoto
 
 # from .models import Customer, Product, Order
 
