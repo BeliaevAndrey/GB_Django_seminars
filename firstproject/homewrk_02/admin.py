@@ -1,5 +1,5 @@
 from django.contrib import admin
-# from .models import Customer, Product, Order
+from .models import Customer, Product, Order
 
 
 class CustomerAdmin(admin.ModelAdmin):
@@ -63,7 +63,7 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('customer', 'product', 'order_date')
     readonly_fields = ('order_date', 'total_price', 'customer', 'product')
 
-#
-# admin.site.register(Customer, CustomerAdmin)
-# admin.site.register(Product, ProductAdmin)
-# admin.site.register(Order, OrderAdmin)
+
+admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Order, OrderAdmin)
